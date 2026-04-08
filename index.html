@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rajat — Space Robotics & Control Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f7f4;
+      --bg-card: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #6b6b6b;
+      --text-subtle: #9a9a9a;
+      --accent: #0f4c81;
+      --accent-light: #e8f0f9;
+      --border: #e4e2dc;
+      --border-strong: #c8c5bc;
+      --tag-bg: #eef2f8;
+      --tag-text: #1a3d6b;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(248, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* LAYOUT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+
+    section { padding: 5rem 0; }
+
+    section + section { border-top: 1px solid var(--border); }
+
+    /* HERO */
+    #hero {
+      padding: 7rem 0 5rem;
+      border-top: none;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name span {
+      color: var(--accent);
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 13px;
+      font-family: var(--mono);
+      padding: 5px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 3rem;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-family: var(--sans);
+      font-weight: 500;
+      padding: 10px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .hero-cta:hover { background: #0d3f6b; transform: translateY(-1px); }
+
+    /* HERO LAYOUT WITH PHOTO */
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .hero-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+      .hero-photo {
+        width: 120px;
+        height: 120px;
+        order: -1;
+      }
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1.9rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    p { color: var(--text-muted); font-weight: 300; }
+
+    .about-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .detail-item {
+      border-left: 2px solid var(--border-strong);
+      padding-left: 1rem;
+    }
+
+    .detail-item .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 3px;
+    }
+
+    .detail-item .value {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+
+    .skill-card .skill-cat {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-card .skill-items {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* PROJECTS */
+    .projects-intro {
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 8px 32px rgba(15,76,129,0.08);
+      transform: translateY(-2px);
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0e1929;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, #0d1b2e 0%, #0f2d4a 100%);
+    }
+
+    .video-placeholder .play-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-placeholder .play-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: rgba(255,255,255,0.7);
+      margin-left: 3px;
+    }
+
+    .video-placeholder p {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+
+    /* Grid of dots pattern on placeholder */
+    .video-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .project-body {
+      padding: 1.75rem 2rem 2rem;
+    }
+
+    .project-number {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+
+    .project-desc {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-family: var(--mono);
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link .icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      flex-shrink: 0;
+    }
+
+    .contact-link .icon svg { width: 15px; height: 15px; }
+
+    .contact-note {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    footer .inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      letter-spacing: 0.04em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .project-body { padding: 1.25rem 1.25rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">rajat.fnu</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <p class="hero-label">Portfolio — Space Robotics &amp; Control</p>
+          <h1 class="hero-name">Fnu <span>Rajat</span></h1>
+          <p class="hero-tagline">
+            M.S. Aerospace Engineering student at University of Cincinnati, working at the intersection of space robotics, dynamics, and control systems. Research assistant at the Intelligent Autonomous Systems Lab.
+          </p>
+          <div class="hero-meta">
+            <span class="hero-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              University of Cincinnati
+            </span>
+            <span class="hero-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Aerospace · ECE · Robotics
+            </span>
+            <span class="hero-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Cincinnati, Ohio
+            </span>
+          </div>
+          <a href="#projects" class="hero-cta">
+            View Projects
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <img
+          class="hero-photo"
+          src="Rajat_Headshot.jpg"
+          alt="Rajat — Aerospace Engineer"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <p class="section-label">About</p>
+          <h2>Building robots<br />for space.</h2>
+          <p style="margin-top: 0.75rem;">
+            I'm a graduate researcher focused on space manipulator systems — specifically how robotic arms dynamically interact with spacecraft in microgravity. My work spans hardware design, embedded programming, and control theory.
+          </p>
+          <p style="margin-top: 1rem;">
+            My background in electronics and communication engineering grounds my work in signal processing, sensor integration, and hardware-software co-design — skills that translate directly into building reliable robotic systems for space applications.
+          </p>
+        </div>
+        <div class="about-detail">
+          <div class="detail-item">
+            <p class="label">Current Role</p>
+            <p class="value">Research Assistant, IASL — UC</p>
+          </div>
+          <div class="detail-item">
+            <p class="label">Graduate Program</p>
+            <p class="value">M.S. Aerospace Engineering &amp; Mechanics</p>
+          </div>
+          <div class="detail-item">
+            <p class="label">Specialization</p>
+            <p class="value">Space Robotics · Dynamics · Control</p>
+          </div>
+          <div class="detail-item">
+            <p class="label">Undergraduate</p>
+            <p class="value">B.Tech Electronics &amp; Communication Eng.<br/>DCRUST, Murthal</p>
+          </div>
+          <div class="detail-item">
+            <p class="label">Research Funding</p>
+            <p class="value">AFOSR (Air Force Office of Scientific Research)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="skills-grid">
+        <div class="skill-card">
+          <p class="skill-cat">Languages</p>
+          <p class="skill-items">C++<br/>Python<br/>MATLAB</p>
+        </div>
+        <div class="skill-card">
+          <p class="skill-cat">Robotics</p>
+          <p class="skill-items">ROS2<br/>Isaac Sim<br/>Gazebo</p>
+        </div>
+        <div class="skill-card">
+          <p class="skill-cat">Simulation</p>
+          <p class="skill-items">Simulink<br/>FlightGear<br/>AutoCAD / SolidWorks</p>
+        </div>
+        <div class="skill-card">
+          <p class="skill-cat">Control</p>
+          <p class="skill-items">LQR / LQG<br/>Kalman Filter<br/>Reaction Wheel Dynamics</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">Research Projects</p>
+      <div class="projects-intro">
+        <h2>Work from the lab.</h2>
+        <p>Research conducted at the Intelligent Autonomous Systems Laboratory, University of Cincinnati, funded by the Air Force Office of Scientific Research.</p>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="video-wrapper">
+          <!--
+            INSTRUCTIONS: Replace the line below with your YouTube embed.
+            To embed a YouTube video, use:
+              <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+            and remove the .video-placeholder div entirely.
+          -->
+          <div class="video-placeholder">
+            <div class="play-icon">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <p>YouTube video placeholder</p>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-number">Project 01 — AFOSR</p>
+          <h3 class="project-title">Configurable Robotic Arm on Air-Bearing Spacecraft Simulator</h3>
+          <p class="project-desc">
+            Designing, constructing, programming, and operating a configurable robotic arm mechanism with variable static parameters — including link mass, length, and inertia — mounted on an air-bearing spacecraft simulator. The goal is to study the dynamic coupling effect in space manipulator systems (SMS): how motion of a robotic arm affects the attitude and trajectory of its host spacecraft in a near-frictionless environment. This testbed directly supports the AFOSR-funded project on understanding and addressing dynamic coupling for challenging in-space operations.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Space Robotics</span>
+            <span class="tag">Dynamic Coupling</span>
+            <span class="tag">Air-Bearing Testbed</span>
+            <span class="tag">ROS2</span>
+            <span class="tag">Spacecraft Simulator</span>
+            <span class="tag">AFOSR</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="video-wrapper">
+          <!--
+            INSTRUCTIONS: Replace the line below with your YouTube embed.
+            To embed a YouTube video, use:
+              <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+            and remove the .video-placeholder div entirely.
+          -->
+          <div class="video-placeholder">
+            <div class="play-icon">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <p>YouTube video placeholder</p>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-number">Project 02 — IASL</p>
+          <h3 class="project-title">Zero-Speed Crossing Effect &amp; Peak Current Dynamics in a Reaction Wheel</h3>
+          <p class="project-desc">
+            Investigating the Zero-Speed Crossing Effect and peak current dynamics in a reaction wheel using a 3-DOF air-bearing testbed. Reaction wheels are critical attitude control actuators on spacecraft, but they exhibit nonlinear behavior at zero-speed crossings — a transition that can cause torque disturbances and instability. This work characterizes these dynamics experimentally, supporting the development of more robust attitude control strategies for small satellites and spacecraft with momentum exchange devices.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Reaction Wheel</span>
+            <span class="tag">Attitude Control</span>
+            <span class="tag">3-DOF Testbed</span>
+            <span class="tag">Zero-Speed Crossing</span>
+            <span class="tag">Peak Current Dynamics</span>
+            <span class="tag">MATLAB</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <p class="section-label">Contact</p>
+          <h2>Let's connect.</h2>
+          <p class="contact-note">
+            I'm always open to discussing space robotics, control systems, research collaborations, or opportunities in the aerospace industry.
+          </p>
+        </div>
+        <div>
+          <div class="contact-links">
+            <a href="mailto:rajatrt@mail.uc.edu" class="contact-link">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </span>
+              rajatrt@mail.uc.edu
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" class="contact-link">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              </span>
+              GitHub
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="contact-link">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </span>
+              LinkedIn
+            </a>
+            <a href="tel:+15132256719" class="contact-link">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.01z"/></svg>
+              </span>
+              +1 513-225-6719
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="inner">
+        <span>Fnu Rajat — M.S. Aerospace Engineering, University of Cincinnati</span>
+        <span>2025 – 2027</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
